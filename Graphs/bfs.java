@@ -55,7 +55,7 @@ public class bfs {
             int curr=q.remove();
             if(!vis[curr])
             {
-                System.out.println(curr+" ");
+                System.out.print(curr+" ");
                 vis[curr]=true;
                 for(int i=0;i<graph[curr].size();i++)
                 {
@@ -69,6 +69,7 @@ public class bfs {
         int V=7;
         ArrayList<Edge>[] graph=new ArrayList[V];
         createGraph(graph);
+        bfs(graph);
 
     }
     
