@@ -1,6 +1,8 @@
-import java.util.*;
+import java.util.ArrayList;
+import java.util.LinkedList;
+import java.util.Queue;
 
-public class bfs {
+public class hasPath {
     static class Edge{
         int src;
         int dest;
@@ -46,31 +48,29 @@ public class bfs {
 
     }
 
-    public static void bfs(ArrayList<Edge>[] graph)   //O(V+E)
+    public static boolean hasPath(ArrayList<Edge>[] graph,int src,int dest,boolean[] vis)   //O(V+E)
     {
-        Queue<Integer>q=new LinkedList<>();
-        boolean[] vis=new boolean[graph.length];
-        q.add(0);
-        while(!q.isEmpty()){
-            int curr=q.remove();
-            if(!vis[curr])
+        if(src==dest)return true;
+        vis[src]=true;
+        for(int i=0;i<graph[src].size();i++)
+        {
+            Edge e=graph[src].get(i);
+
+            if(!vis[e.dest] && hasPath(graph, e.dest, dest, vis))
             {
-                System.out.print(curr+" ");
-                vis[curr]=true;
-                for(int i=0;i<graph[curr].size();i++)
-                {
-                    Edge e=graph[curr].get(i);
-                    q.add(e.dest);
-                }
+                return true;
             }
         }
+        return false;
     }
+
+   
     public static void main(String[] args) {
         int V=7;
         ArrayList<Edge>[] graph=new ArrayList[V];
         createGraph(graph);
-        bfs(graph);
+        System.out.println(hasPath(graph, 0, 5, new boolean[V]));
 
     }
-    
+
 }

@@ -1,7 +1,9 @@
-import java.util.*;
+import java.util.ArrayList;
+import java.util.LinkedList;
+import java.util.Queue;
 
-public class bfs {
-    static class Edge{
+public class dfs {
+   static class Edge{
         int src;
         int dest;
         int wt;
@@ -45,32 +47,29 @@ public class bfs {
         graph[6].add(new Edge(6, 5, 1));
 
     }
-
-    public static void bfs(ArrayList<Edge>[] graph)   //O(V+E)
+    public static void dfs(ArrayList<Edge>[] graph,int curr,boolean[] vis)  //O(V+E)
     {
-        Queue<Integer>q=new LinkedList<>();
-        boolean[] vis=new boolean[graph.length];
-        q.add(0);
-        while(!q.isEmpty()){
-            int curr=q.remove();
-            if(!vis[curr])
+        System.out.print(curr+" ");
+        vis[curr]=true;
+
+        for(int i=0;i<graph[curr].size();i++)
+        {
+            Edge e=graph[curr].get(i);
+            if(!vis[e.dest])
             {
-                System.out.print(curr+" ");
-                vis[curr]=true;
-                for(int i=0;i<graph[curr].size();i++)
-                {
-                    Edge e=graph[curr].get(i);
-                    q.add(e.dest);
-                }
+                dfs(graph,e.dest,vis);
             }
         }
     }
+
+    
     public static void main(String[] args) {
         int V=7;
         ArrayList<Edge>[] graph=new ArrayList[V];
         createGraph(graph);
-        bfs(graph);
+        dfs(graph, 0, new boolean[V]);
+       
 
     }
-    
+
 }
