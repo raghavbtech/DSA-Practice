@@ -2,13 +2,14 @@ import java.util.ArrayList;
 import java.util.LinkedList;
 import java.util.Queue;
 
-public class dfs {
-   static class Edge{
+public class dfsConnectedComponents {
+    static class Edge{
         int src;
         int dest;
         int wt;
         public Edge(int s,int d,int w)
         {
+
             this.src=s;
             this.dest=d;
             this.wt=w;
@@ -46,7 +47,15 @@ public class dfs {
         graph[6].add(new Edge(6, 5, 1));
 
     }
-    public static void dfs(ArrayList<Edge>[] graph,int curr,boolean[] vis)  //O(V+E)
+    public static void dfs(ArrayList<Edge>[] graph)
+    {
+        boolean[] vis=new boolean[graph.length];
+        for(int i=0;i<graph.length;i++)
+        {
+            dfsUtil(graph, i, vis);
+        }
+    }
+    public static void dfsUtil(ArrayList<Edge>[] graph,int curr,boolean[] vis)  //O(V+E)
     {
         System.out.print(curr+" ");
         vis[curr]=true;
@@ -56,19 +65,9 @@ public class dfs {
             Edge e=graph[curr].get(i);
             if(!vis[e.dest])
             {
-                dfs(graph,e.dest,vis);
+                dfsUtil(graph,e.dest,vis);
             }
         }
-    }
-
-    
-    public static void main(String[] args) {
-        int V=7;
-        ArrayList<Edge>[] graph=new ArrayList[V];
-        createGraph(graph);
-        dfs(graph, 0, new boolean[V]);
-       
-
     }
 
 }

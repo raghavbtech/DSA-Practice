@@ -2,13 +2,14 @@ import java.util.ArrayList;
 import java.util.LinkedList;
 import java.util.Queue;
 
-public class dfs {
-   static class Edge{
+public class bfsConnectedComponents {
+    static class Edge{
         int src;
         int dest;
         int wt;
         public Edge(int s,int d,int w)
         {
+
             this.src=s;
             this.dest=d;
             this.wt=w;
@@ -46,29 +47,35 @@ public class dfs {
         graph[6].add(new Edge(6, 5, 1));
 
     }
-    public static void dfs(ArrayList<Edge>[] graph,int curr,boolean[] vis)  //O(V+E)
-    {
-        System.out.print(curr+" ");
-        vis[curr]=true;
 
-        for(int i=0;i<graph[curr].size();i++)
+    public static void bfs(ArrayList<Edge>[] graph)
+    {
+        boolean[] vis=new boolean[graph.length];
+        for(int i=0;i<graph.length;i++)
         {
-            Edge e=graph[curr].get(i);
-            if(!vis[e.dest])
+            if(!vis[i])
             {
-                dfs(graph,e.dest,vis);
+                bfsUtil(graph, vis);
+            }
+        }
+
+    }
+    public static void bfsUtil(ArrayList<Edge>[] graph,boolean[] vis)   //O(V+E)
+    {
+        Queue<Integer>q=new LinkedList<>();
+        q.add(0);
+        while(!q.isEmpty()){
+            int curr=q.remove();
+            if(!vis[curr])
+            {
+                System.out.print(curr+" ");
+                vis[curr]=true;
+                for(int i=0;i<graph[curr].size();i++)
+                {
+                    Edge e=graph[curr].get(i);
+                    q.add(e.dest);
+                }
             }
         }
     }
-
-    
-    public static void main(String[] args) {
-        int V=7;
-        ArrayList<Edge>[] graph=new ArrayList[V];
-        createGraph(graph);
-        dfs(graph, 0, new boolean[V]);
-       
-
-    }
-
 }
